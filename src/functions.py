@@ -1,17 +1,16 @@
-import time
-
-from sklearn.linear_model import Ridge
-from sklearn.pipeline import make_pipeline
-from sklearn.preprocessing import PolynomialFeatures, StandardScaler
 import itertools
 import os
+import time
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 import torch
 import torch.nn as nn
+from sklearn.linear_model import Ridge
 from sklearn.model_selection import KFold
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import PolynomialFeatures, StandardScaler
 
 from src.classes import FullyConnectedNN
 from src.constants import DATASET_PATH, TARGET_COLS
@@ -137,6 +136,7 @@ def plot_cv_curves(history, out_path):
         ax.set_xlabel("epoch")
         ax.set_ylabel("MSE loss (scaled targets)")
         ax.legend()
+        ax.set_ylim(0.20, 0.30)
     fig.tight_layout()
     fig.savefig(out_path, dpi=200)
     plt.close(fig)

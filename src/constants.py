@@ -26,7 +26,7 @@ OPTIMAL = {
     "batch_size": 256,
     "weight_decay": 0.0,
 }
-FINAL_EPOCHS = 100
+FINAL_EPOCHS = 200
 CV_FOLDS = 4
 CV_HISTORY_PATH = "tables/cv_history.csv"
 CV_FOLD_METRICS_PATH = "tables/cv_fold_metrics.csv"
@@ -43,6 +43,6 @@ SWEEPS = {
 SWEEP_FOLDS = 3
 
 POLY_DEGREES = [1, 2, 3, 4, 5, 6]
-POLY_ALPHAS = [0.01, 0.1, 1.0, 10.0]
+POLY_ALPHAS = [0.01, 0.1, 1.0, 10.0, 100.0]
 POLY_GRID_PATH = "tables/poly_grid.csv"
 POLY_SUMMARY_PATH = "tables/poly_summary.csv"

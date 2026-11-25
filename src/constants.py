@@ -32,6 +32,10 @@ CV_HISTORY_PATH = "tables/cv_history.csv"
 CV_FOLD_METRICS_PATH = "tables/cv_fold_metrics.csv"
 CV_SUMMARY_PATH = "tables/cv_summary.csv"
 CV_FIGURE_PATH = "figures/cv_loss_curves.png"
+NN_TIMING_PATH = "tables/nn_timing.csv"
+
+TABLE_DIR = "tables"
+FIGURE_DIR = "figures"
 
 SWEEPS = {
     "hidden_layers": [[8], [16, 16], [32, 32], [32, 32, 32], [64, 64, 64]],

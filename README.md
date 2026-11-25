@@ -12,7 +12,7 @@ This project trains a fully connected neural network, built in PyTorch, to predi
 
 ## Environment
 
-- Python 3.12.16
+- Python 3.12
 - matplotlib 3.11.2
 - numpy 2.5.4
 - pandas 3.1.1
@@ -45,7 +45,7 @@ The inputs span very different magnitudes: viable cell density ranges from about
 
 ### Stage 1: Hyperparameter Search (`run_search`)
 
-`run_search` trains one network for every combination in the parameter grid (3 architectures x 2 activations x 2 learning rates x 2 batch sizes x 3 weight decays = 72 networks) for 100 epochs on the single train/validation split. For each network it records the lowest validation loss, the epoch at which it occurred, the final validation loss and the mean NRMSE. It rewrites `tables/search_results.csv` after every network so that progress is never lost. When `main.py` later finds this file, it checks that it contains all 72 rows and stops with an error if it does not, so a search interrupted halfway can never be mistaken for a finished one. The optimal configuration, stored in `src/constants.py`, is selected from this table. This stage finds a good configuration cheaply before more expensive cross-validation is spent on it.
+`run_search` trains one network for every combination in the parameter grid (3 architectures x 2 activations x 2 learning rates x 2 batch sizes x 3 weight decays = 72 networks) for 100 epochs on the single train/validation split. For each network it records the lowest validation loss, the epoch at which it occurred, the final validation loss and the mean NRMSE. It rewrites `tables/search_results.csv` after every network so that progress is never lost. When main.py later finds this file, it checks that every configuration in the current grid is present and stops with an error if any are missing, so a search interrupted halfway, or one run with an older grid, can never be mistaken for a finished one. The optimal configuration, stored in `src/constants.py`, is selected from this table. This stage finds a good configuration cheaply before more expensive cross-validation is spent on it.
 
 ### Stage 2: Cross-Validation (`run_cv`, `summarize_cv`, `plot_cv_curves`)
 
@@ -61,7 +61,7 @@ The inputs span very different magnitudes: viable cell density ranges from about
 
 ### Orchestration (`main.py`)
 
-`main.py` loads the data, creates the output directories and runs the four stages in order, printing each stage's key results. Before each stage it checks whether that stage's output files exist and loads them if so. Deleting a stage's files forces it to be recomputed, and deleting all of them reproduces the complete analysis from scratch.
+main.py loads the data, creates the output directories and runs the four stages in order, printing each stage's key results. Before each stage it checks whether that stage's output files exist and loads them if so. Deleting a stage's files forces it to be recomputed, and deleting all of them reproduces the complete analysis from scratch. After the search, main.py also checks that the optimal hyperparameters stored in src/constants.py still match the top-ranked configuration in tables/search_results.csv, and prints a warning if they do not, so the later stages can never silently run on a configuration the search no longer supports. At the end it reads tables/nn_timing.csv and tables/poly_summary.csv and prints the training times of the two models side by side, which is the evidence for the comparison in the Analysis.
 
 ## Analysis
 
